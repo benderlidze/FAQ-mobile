@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .question {
+            border-top: 1px solid #c1a459;
+            color: #c1a459;
+            cursor: pointer;
+            direction: ltr;
+
+            font-weight: 500;
+            line-height: 1.22;
+            padding-bottom: 18px;
+            padding-top: 18px;
+            position: relative;
+            text-align: left;
+            transition: all .1s ease-in-out;
+        }
+
+        .question::after {
+            background-color: #c1a459;
+            bottom: -1px;
+            content: "";
+            height: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .active {
+            border-color: #000;
+            border-width: 2px;
+            color: #000;
+            font-size: 22px;
+            font-weight: 600;
+            padding-bottom: 12px;
+            padding-top: 10px;
+        }
+
+        .active::after {
+            background-color: #000;
+            height: 2px;
+        }
+
+
+        #left {
+            margin-right: 59px;
+        }
+
+        #faq {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            flex-direction: row;
+            max-height: 245px;
+            font-family: Montserrat, sans-serif;
+        }
+
+        #faq>div {
+            width: 33%;
+        }
+
+        #center {
+            overflow-y: scroll;
+            direction: rtl;
+            padding-left: 26px;
+            margin-right: 90px;
+        }
+
+        #center::-webkit-scrollbar {
+            background: #e5e5e5;
+            border-radius: 5px;
+            width: 5px;
+        }
+
+        #center::-webkit-scrollbar-thumb {
+            background: #000;
+            border-radius: 5px;
+            width: 4px;
+        }
+
+        #center::after {
+            background: #000;
+            content: "";
+            height: 100%;
+            left: 2px;
+            position: absolute;
+            top: 0;
+            width: 1px;
+        }
+
+        #right {
+            display: flex;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            justify-content: space-between;
+
+        }
+
+        .answers-bottom-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .answers-arrows-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            justify-items: center;
+            gap: 10px;
+        }
+
+        .answers-arrow {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="faq">
+        <div id="left"></div>
+        <div id="center"></div>
+        <div id="right"></div>
+    </div>
+    <script>
+        const data =
+            [
+
+                {
+                    name: "General", questions: [
+                        {
+                            name: "I want to rent an apartment, what should I do?",
+                            answers: [
+                                "In Zandkasteel komen er regelmatig woningen beschikbaar. We houden je hierover op de hoogte via de nieuwsbrief! Zorg dus dat je je hiervoor aanmeld. De inschrijving is volledig online. Door de digitale inschrijving kunnen wij sneller reageren, je beter ondersteunen en kun je vanuit huis alles organiseren. De inschrijving bestaat uit verschillende onderdelen en in deze stappen worden diverse controles uitgevoerd:",
+                                `• Inschrijven Dit doe je online via de website. Je selecteert de beschikbare appartementen van je voorkeur, die passen bij je inkomenssituatie. Je kunt de woningen selecteren en je documenten uploaden om je dossier compleet te maken.`,
+                                `• Voorlopige toewijzing Er worden wekelijks toewijzingen gedaan. De toewijzing wordt via de mail bekend gemaakt en is op basis van woningvoorkeuren, inkomenssituatie en compleetheid van het dossier. Als er meerdere inschrijvingen voor dezelfde woning zijn, dan wordt er geloot.`,
+                                `When you receive a preliminary allocation, you can accept or reject it. After accepting the allocation, you will receive a confirmation by e-mail with instructions for completing the rental procedure. We will check your details for authenticity and review your income situation and payment history. The result of this check will be sent to you within 10 working days, provided that you have made all the necessary information and documents available. Should any documents be missing, the assessment may take longer.`,
+                                `- Final check and final acceptance When your file has been fully approved based on the review, you will receive an e-mail informing you that your file has been approved and you will receive the rental agreement digitally for signature. You sign this digitally via IDIN. Changes by the tenant to the rental agreement are unfortunately not possible. `
+
+                            ]
+                        },
+                        {
+                            name: "Do I have to pay registration or mediation fees?",
+                            answers: [
+                                "No, registration and mediation fees are not charged. The registration is free of charge and you can register online. The registration is valid for one year. If you are not assigned a home within this year, you can extend your registration for another year for free."
+                            ]
+                        },
+                        {
+                            name: "What is the rental reservation?",
+                            answers: [
+                                `The rental reservation is a deposit that you pay when you sign the lease. This deposit is equal to one month's rent. The deposit is used to pay the first month's rent
+                                    and any other costs that you have to pay when you sign the lease. The deposit is not a security deposit. You will not get the deposit back when you move out.`
+                            ]
+                        },
+                        {
+                            name: "Can I tour the properties?",
+                            answers: [
+                                `Yes, you can view the properties. We organize viewing moments for the available homes. You can register for a viewing moment via the website.`
+                            ]
+                        },
+                        {
+                            name: "Can I apply for rent allowance?",
+                            answers: [
+                                `Yes, you can apply for rent allowance. You can apply for rent allowance if you are 18 years or older and have a rental contract. You can apply for rent allowance via the website of the Tax Authorities.`
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Registration", questions: [
+                        { name: `How does enrollment work?`, answers: [] },
+                        { name: `Why does enrollment go digital?`, answers: [] },
+                        { name: `What documents do I need?`, answers: [] },
+                        { name: `How do I make sure my documentation is AVG compliant?`, answers: [] },
+                    ]
+                },
+                {
+                    name: "Assessment and income",
+                    questions: [
+                        { name: `What conditions must I meet to be eligible?`, answers: [] },
+                        { name: `What are the income guidelines to rent?`, answers: [] },
+                        { name: `Wat als ik niet (helemaal) voldoe aan de inkomenseisen?`, answers: [] },
+                        { name: `Hoe werkt de toewijzing?`, answers: [] },
+                        { name: `Can I rent a rental property as a temporary worker?`, answers: [] },
+                        { name: `Can I get rental housing as a student?`, answers: [] },
+                        { name: `Is it possible to rent with a guarantor?`, answers: [] },
+                        { name: `Kan ik een woning delen met een vriend of collega?`, answers: [] },
+                        { name: `Is a deposit/bank guarantee applicable?`, answers: [] },
+                    ]
+                },
+                {
+                    name: "Quality and facilities",
+                    questions: [
+                        { name: `Are the images on the website of the apartment in question?`, answers: [] },
+                        { name: `Can I choose my own kitchen and/or bathroom?`, answers: [] },
+                        { name: `What do the kitchens look like?`, answers: [] },
+                        { name: `How are the walls and ceilings finished?`, answers: [] },
+                        { name: `What is the height of the ceiling?`, answers: [] },
+                        { name: `May the walls be painted?`, answers: [] },
+                        { name: `How is the bathroom furnished and finished?`, answers: [] },
+                        { name: `How is the (separate) toilet finished?`, answers: [] },
+                        { name: `Should I lay a floor myself and what should I consider?`, answers: [] },
+                        { name: `How is the home (and water) heated?`, answers: [] },
+                        { name: `Is there ventilation in the home?`, answers: [] },
+                        { name: `What type of outdoor space do I have?`, answers: [] },
+                        { name: `Is there a courtyard garden available?`, answers: [] },
+                        { name: `Zijn er parkeerplaatsen?`, answers: [] },
+                        { name: `Are charging stations available?`, answers: [] },
+                        { name: `Are storage units available?`, answers: [] },
+                        { name: `Are there elevators available?`, answers: [] },
+                        { name: `Who has access to the building?`, answers: [] },
+                        { name: `Where can I park my bike and/or scooter?`, answers: [] },
+                        { name: `How sustainable is Zandkasteel?`, answers: [] },
+                        { name: `Energy Label`, answers: [] },
+                        { name: `Are the apartments equipped with fiber optics/cable?`, answers: [] },
+                        { name: `Are pets allowed?`, answers: [] },
+                        { name: `How can I use the (private) cinema?`, answers: [] },
+                    ]
+                }
+
+            ]
+
+
+
+
+        const left = document.getElementById("left")
+        const center = document.getElementById("center")
+        const right = document.getElementById("right")
+
+        function main() {
+
+            data.forEach((item) => {
+
+                const mainQuestion = createQuestion({
+                    name: item.name,
+                    callback: (question) => {
+
+                        center.innerHTML = ""
+                        right.innerHTML = ""
+
+                        console.log('question', item);
+
+                        item.questions.forEach((question) => {
+                            const questionElement = createQuestion({
+                                name: question.name,
+                                callback: (answer) => {
+                                    right.innerHTML = ""
+
+                                    let ans;
+                                    if (question.answers.length === 1) {
+                                        ans = createAnswer({ name: question.answers[0] })
+                                    } else {
+                                        ans = createAnswers(question.answers)
+                                    }
+
+                                    right.appendChild(ans)
+
+                                }
+                            })
+                            center.appendChild(questionElement)
+                        })
+
+
+                    }
+                })
+                left.appendChild(mainQuestion)
+
+            })
+
+        }
+
+        function createQuestion({ name, callback }) {
+            const div = document.createElement("div")
+            div.classList.add("question")
+            div.innerText = name
+            div.addEventListener("click", () => {
+                if (typeof callback === "function") {
+                    callback({ name })
+                }
+                div.classList.add("active")
+
+                // remove active class from siblings
+                const siblings = Array.from(div.parentElement.children).filter((child) => child !== div)
+                siblings.forEach((sibling) => {
+                    sibling.classList.remove("active")
+                })
+            })
+            return div
+        }
+
+        function createAnswer({ name }) {
+            console.log('name', name);
+            const div = document.createElement("div")
+            div.classList.add("answer")
+            div.innerText = name
+            return div
+        }
+
+        function createAnswers(answers) {
+
+            console.log('answers', answers);
+            const div = document.createElement("div")
+            div.classList.add("answers")
+
+
+            const answer = document.createElement("div")
+            answer.classList.add("answer")
+            answer.innerHTML = answers[0]
+
+            div.appendChild(answer)
+
+            let current = 1
+            const totalLength = answers.length
+
+            const counterDiv = document.createElement("div")
+            counterDiv.classList.add("answers-counter")
+            counterDiv.innerText = `${current}/${totalLength}`
+
+            const arrowsContainer = document.createElement("div")
+            arrowsContainer.classList.add("answers-arrows-container")
+
+            const leftArrow = document.createElement("div")
+            leftArrow.classList.add("answers-arrow")
+            leftArrow.innerHTML = `<svg width="101" style="transform:rotateY(180deg)" height="16" viewBox="0 0 101 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-7026aa82="" d="M100.707 8.70711C101.098 8.31658 101.098 7.68342 100.707 7.29289L94.3431 0.928932C93.9526 0.538408 93.3195 0.538408 92.9289 0.928932C92.5384 1.31946 92.5384 1.95262 92.9289 2.34315L98.5858 8L92.9289 13.6569C92.5384 14.0474 92.5384 14.6805 92.9289 15.0711C93.3195 15.4616 93.9526 15.4616 94.3431 15.0711L100.707 8.70711ZM100 7L0 7V9L100 9V7Z" fill="black"></path></svg>`
+            leftArrow.addEventListener("click", () => {
+                if (current > 1) {
+                    current--
+                    answer.innerHTML = answers[current - 1]
+                    counterDiv.innerText = `${current}/${totalLength}`
+                }
+            })
+
+            const rightArrow = document.createElement("div")
+            rightArrow.classList.add("answers-arrow")
+            rightArrow.innerHTML = `<svg  width="101" height="16" viewBox="0 0 101 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path data-v-7026aa82="" d="M100.707 8.70711C101.098 8.31658 101.098 7.68342 100.707 7.29289L94.3431 0.928932C93.9526 0.538408 93.3195 0.538408 92.9289 0.928932C92.5384 1.31946 92.5384 1.95262 92.9289 2.34315L98.5858 8L92.9289 13.6569C92.5384 14.0474 92.5384 14.6805 92.9289 15.0711C93.3195 15.4616 93.9526 15.4616 94.3431 15.0711L100.707 8.70711ZM100 7L0 7V9L100 9V7Z" fill="black"></path></svg>`
+            rightArrow.addEventListener("click", () => {
+                if (current < totalLength) {
+                    current++
+                    answer.innerHTML = answers[current - 1]
+                    counterDiv.innerText = `${current}/${totalLength}`
+                }
+            })
+
+
+            const bottomContainer = document.createElement("div")
+            bottomContainer.classList.add("answers-bottom-container")
+
+
+            arrowsContainer.appendChild(leftArrow)
+            arrowsContainer.appendChild(rightArrow)
+
+            bottomContainer.appendChild(counterDiv)
+            bottomContainer.appendChild(arrowsContainer)
+
+
+            div.appendChild(bottomContainer)
+            return div
+        }
+
+
+        main()
+
+    </script>
+
+
+
+</body>
+
+</html>
